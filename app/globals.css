@@ -28,7 +28,7 @@ body {
 
 @layer utilitis {
   .nav-link {
-    @apply text-zinc-500 p-1 hover:text-white hover:bg-zinc-700 hover:rounded  transition-colors
+    @apply text-zinc-500 py-1 px-2 rounded hover:text-white hover:bg-zinc-700 hover:rounded  transition-colors
   }
 
 }

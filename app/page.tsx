@@ -1,7 +1,6 @@
-import axios from "axios";
 import { url } from "@/utilits";
 import { Grid } from "@radix-ui/themes";
-import DocumentCard, { Document } from "./DocumentCard";
+import DocumentCard, { Document } from "./_homeComponents/DocumentCard";
 import { notFound } from "next/navigation";
 
 export default async function Home() {

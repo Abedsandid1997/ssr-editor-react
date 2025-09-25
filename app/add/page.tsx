@@ -1,5 +1,5 @@
 import React from "react";
-import DocumentForm from "./DocumentFormDynamic";
+import DocumentForm from "./_addComponents/DocumentFormDynamic";
 import { Flex } from "@radix-ui/themes";
 
 const page = () => {

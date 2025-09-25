@@ -1,11 +1,11 @@
 import { url } from "@/utilits";
 import axios from "axios";
-import { Document } from "../DocumentCard";
+import { Document } from "../_homeComponents/DocumentCard";
 import { json } from "zod";
 import { Box, Card, Flex, Grid, Heading } from "@radix-ui/themes";
 import ReactMarkdown from "react-markdown";
-import EditButton from "./EditButton";
-import DeleteButton from "./DeleteButton";
+import EditButton from "./_idComponents/EditButton";
+import DeleteButton from "./_idComponents/DeleteButton";
 import { notFound } from "next/navigation";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {

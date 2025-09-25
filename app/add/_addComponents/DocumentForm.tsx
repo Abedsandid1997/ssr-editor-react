@@ -72,14 +72,18 @@ const DocumentForm = ({ document }: { document?: DocuemntFormData }) => {
             control={control}
             defaultValue={document?.content}
             render={({ field }) => (
-              <SimpleMDE placeholder="Description" {...field} />
+              <SimpleMDE placeholder="Content" {...field} />
             )}
           />
           <ErrorMessage> {errors.content?.message}</ErrorMessage>
         </Card>
 
-        <Button disabled={isSubmitting} size="3" className="mt-5">
-          {document ? "Update issue" : "Create Issue"}
+        <Button
+          disabled={isSubmitting}
+          size="3"
+          className="mt-5 !cursor-pointer"
+        >
+          {document ? "Update document" : "Create document"}
           {isSubmitting && <Spinner />}
         </Button>
       </form>

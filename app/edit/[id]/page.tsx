@@ -1,5 +1,5 @@
-import DocumentForm from "@/app/add/DocumentFormDynamic";
-import { Document } from "@/app/DocumentCard";
+import DocumentForm from "@/app/add/_addComponents/DocumentFormDynamic";
+import { Document } from "@/app/_homeComponents/DocumentCard";
 import { url } from "@/utilits";
 import { Flex } from "@radix-ui/themes";
 import axios from "axios";

@@ -14,7 +14,11 @@ const DeleteButton = ({ id }: { id: String }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button disabled={isSubmitting} color="red">
+          <Button
+            className="!cursor-pointer"
+            disabled={isSubmitting}
+            color="red"
+          >
             Delete {isSubmitting && <Spinner />}
           </Button>
         </AlertDialog.Trigger>
@@ -26,12 +30,13 @@ const DeleteButton = ({ id }: { id: String }) => {
 
           <Flex gap="3" mt="4" justify="end">
             <AlertDialog.Cancel>
-              <Button variant="soft" color="gray">
+              <Button className="!cursor-pointer" variant="soft" color="gray">
                 Cancel
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
               <Button
+                className="!cursor-pointer"
                 variant="solid"
                 color="red"
                 onClick={async () => {
