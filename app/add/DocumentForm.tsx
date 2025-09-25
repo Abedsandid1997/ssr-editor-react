@@ -60,7 +60,9 @@ const DocumentForm = ({ document }: { document?: DocuemntFormData }) => {
             {...register("title")}
             size="3"
           />
-          <ErrorMessage> {errors.title?.message}</ErrorMessage>
+          <div className="mt-2">
+            <ErrorMessage> {errors.title?.message}</ErrorMessage>
+          </div>
         </Card>
 
         <Card>

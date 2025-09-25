@@ -13,7 +13,7 @@ const Navbar = () => {
   ];
   return (
     <nav className="border-b h-5rem border-gray-300 mb-5 px-5">
-      <Flex gap="5" align="center" height="3rem">
+      <Flex gap="5" align="center" height="4rem">
         <Link href="/">
           {" "}
           <HiDocumentText size="2rem" />
@@ -23,7 +23,8 @@ const Navbar = () => {
             <li key={link.label}>
               <Link
                 className={classNames({
-                  "text-zinc-1000": true,
+                  "text-white bg-zinc-500 p-1 rounded":
+                    link.href === currentPath,
                   "nav-link": link.href !== currentPath,
                 })}
                 href={link.href}
