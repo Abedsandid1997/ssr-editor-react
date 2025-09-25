@@ -1,9 +1,10 @@
+import { url } from "../../utilits";
 describe("Documents flow", () => {
   let documentId;
 
   beforeEach(() => {
     // Skapa dokument direkt via API
-    cy.request("POST", "http://localhost:3000/api/document", {
+    cy.request("POST", `${url}/api/document`, {
       title: "Test document",
       content: "Content from Cypress",
     }).then((response) => {
@@ -11,16 +12,13 @@ describe("Documents flow", () => {
     });
 
     // Besök frontend
-    cy.visit("http://localhost:3001");
+    cy.visit("http://localhost:3000");
   });
 
   afterEach(() => {
     if (documentId) {
       // Ta bort dokumentet via API
-      cy.request(
-        "DELETE",
-        `http://localhost:3000/api/document/delete/${documentId}`
-      );
+      cy.request("DELETE", `${url}/api/document/delete/${documentId}`);
     }
   });
 
@@ -45,7 +43,7 @@ describe("Documents flow", () => {
     cy.get(".CodeMirror").first().click().type("Content from Cypress :)");
     cy.contains("button", "Create document").click();
 
-    cy.url().should("eq", "http://localhost:3001/");
+    cy.url().should("eq", "http://localhost:3000/");
     cy.contains("a", "Another document");
 
     cy.contains("a", "Another document").click();
@@ -63,7 +61,7 @@ describe("Documents flow", () => {
     cy.get(".CodeMirror").first().click().type("Updated content from Cypress");
     cy.contains("button", "Update document").click();
 
-    cy.url().should("eq", "http://localhost:3001/");
+    cy.url().should("eq", "http://localhost:3000/");
     cy.contains("a", "Updated title");
   });
 

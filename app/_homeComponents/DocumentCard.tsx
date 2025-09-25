@@ -1,5 +1,5 @@
 import Link from "@/components/Link";
-import { Box, Card, Heading, Inset } from "@radix-ui/themes";
+import { Box, Card, Heading, Inset, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 
@@ -35,6 +35,9 @@ const DocumentCard = ({ title, content, _id }: Document) => {
             {content.length > 20 ? content.slice(0, 20) + "..." : content}
           </ReactMarkdown>
         </Box>
+        <Text color="red" size="2" mt="auto">
+          <Link href={`/${_id}`}>Details....</Link>
+        </Text>
       </Card>
     </Box>
   );
