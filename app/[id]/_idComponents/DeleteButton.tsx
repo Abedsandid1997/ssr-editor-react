@@ -2,11 +2,10 @@
 import { url } from "@/utilits";
 import { AlertDialog, Button, Flex, Spinner } from "@radix-ui/themes";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const DeleteButton = ({ id }: { id: String }) => {
+const DeleteButton = ({ id }: { id: string }) => {
   const router = useRouter();
   const [error, setError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,7 +43,7 @@ const DeleteButton = ({ id }: { id: String }) => {
                     setIsSubmitting(true);
                     await axios.delete(`${url}/api/document/delete/${id}`);
                     router.push("/");
-                  } catch (error) {
+                  } catch (_error) {
                     setIsSubmitting(false);
                     setError(true);
                   }

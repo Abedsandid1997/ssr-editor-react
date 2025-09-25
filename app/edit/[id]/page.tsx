@@ -12,7 +12,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   try {
     const res = await axios.get(`${url}/api/document/${id}`);
     document = res.data.document;
-  } catch (error) {
+  } catch (_error) {
     notFound();
   }
   return (
