@@ -1,30 +1,41 @@
 "use client";
 
 import { useState } from "react";
-import { TextField, Button, Card, Callout, Spinner } from "@radix-ui/themes";
+import {
+  TextField,
+  Button,
+  Card,
+  Callout,
+  Spinner,
+  Switch,
+  Flex,
+  Text,
+} from "@radix-ui/themes";
 import { useForm, Controller } from "react-hook-form";
-import axios from "axios";
-import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import SimpleMDE from "react-simplemde-editor";
 import { createFormSchema } from "@/validation";
-import { url } from "@/utilits";
 import ErrorMessage from "@/components/ErrorMessage";
+import apiClient from "@/app/services/api-client";
+import RichEditor from "@/app/edit/[id]/RichEditor";
+import CodeEditor from "@/app/edit/[id]/CodeEditor";
 
-type DocuemntFormData = z.infer<typeof createFormSchema>;
-const DocumentForm = ({ document }: { document?: DocuemntFormData }) => {
-  const [error, setError] = useState("");
+type DocumentFormData = z.infer<typeof createFormSchema>;
+
+const DocumentForm = () => {
   const router = useRouter();
+  const [error, setError] = useState("");
+  const [codeMode, setCodeMode] = useState(false);
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<DocuemntFormData>({
+  } = useForm<DocumentFormData>({
     resolver: zodResolver(createFormSchema),
   });
+
   return (
     <div className="w-full h-full">
       {error && (
@@ -35,15 +46,13 @@ const DocumentForm = ({ document }: { document?: DocuemntFormData }) => {
       )}
 
       <form
-        className="space-y-4 w-full h-screen"
+        className="space-y-4 w-full"
         onSubmit={handleSubmit(async (data) => {
           try {
-            if (document)
-              await axios.patch(
-                `${url}/api/document/update/${document._id}`,
-                data
-              );
-            else await axios.post(`${url}/api/document`, data);
+            await apiClient.post(`/api/document`, {
+              ...data,
+              isCode: codeMode,
+            });
 
             router.push("/");
           } catch (error) {
@@ -51,12 +60,9 @@ const DocumentForm = ({ document }: { document?: DocuemntFormData }) => {
           }
         })}
       >
-        <h1 className="text-3xl font-semibold">Create new document</h1>
-
         <Card>
           <TextField.Root
-            placeholder="Titel på issue"
-            defaultValue={document?.title}
+            placeholder="Titel..."
             {...register("title")}
             size="3"
           />
@@ -66,15 +72,43 @@ const DocumentForm = ({ document }: { document?: DocuemntFormData }) => {
         </Card>
 
         <Card>
-          <div className="mb-2 font-medium">Content</div>
-          <Controller
-            name="content"
-            control={control}
-            defaultValue={document?.content}
-            render={({ field }) => (
-              <SimpleMDE placeholder="Content" {...field} />
-            )}
-          />
+          <Flex className="mb-2 font-medium" justify="between" align="center">
+            Content{" "}
+            <Text>
+              Code
+              <Switch
+                variant="surface"
+                checked={codeMode}
+                color="green"
+                onCheckedChange={(checked) => setCodeMode(checked)}
+                ml="2"
+                className="!transition-all !duration-200 !ease-in-out !scale-100 data-[state=checked]:!scale-110"
+              />
+            </Text>
+          </Flex>
+          {codeMode ? (
+            <Controller
+              name="content"
+              control={control}
+              render={({ field }) => (
+                <CodeEditor
+                  content={field.value ?? ""}
+                  onChange={(contnet) => field.onChange(contnet)}
+                />
+              )}
+            />
+          ) : (
+            <Controller
+              name="content"
+              control={control}
+              render={({ field }) => (
+                <RichEditor
+                  content={field.value ?? ""}
+                  onChange={(contnet) => field.onChange(contnet)}
+                />
+              )}
+            />
+          )}
           <ErrorMessage> {errors.content?.message}</ErrorMessage>
         </Card>
 
@@ -83,7 +117,7 @@ const DocumentForm = ({ document }: { document?: DocuemntFormData }) => {
           size="3"
           className="mt-5 !cursor-pointer"
         >
-          {document ? "Update document" : "Create document"}
+          Create document
           {isSubmitting && <Spinner />}
         </Button>
       </form>

@@ -1,30 +1,46 @@
 "use client";
-import { url } from "@/utilits";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { AlertDialog, Button, Flex, Spinner } from "@radix-ui/themes";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-
+import apiClient from "@/app/services/api-client";
 const DeleteButton = ({ id }: { id: string }) => {
   const router = useRouter();
   const [error, setError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      setIsSubmitting(true);
+
+      await apiClient.delete(`/api/document/delete/${id}`);
+
+      router.push("/");
+    } catch (error) {
+      console.error("Error deleting document:", error);
+      setError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button
-            className="!cursor-pointer"
-            disabled={isSubmitting}
-            color="red"
-          >
-            Delete {isSubmitting && <Spinner />}
-          </Button>
+          {!isSubmitting ? (
+            <RiDeleteBin5Line
+              size="1.5rem"
+              className="text-red-400 cursor-pointer transition-all duration-150  hover:text-red-600 hover:scale-105"
+            />
+          ) : (
+            <Spinner />
+          )}
         </AlertDialog.Trigger>
         <AlertDialog.Content maxWidth="450px">
           <AlertDialog.Title>Delete document</AlertDialog.Title>
           <AlertDialog.Description size="2">
-            Are you sure? This document will no longer be available
+            Are you sure? This document will no longer be available.
           </AlertDialog.Description>
 
           <Flex gap="3" mt="4" justify="end">
@@ -38,16 +54,7 @@ const DeleteButton = ({ id }: { id: string }) => {
                 className="!cursor-pointer"
                 variant="solid"
                 color="red"
-                onClick={async () => {
-                  try {
-                    setIsSubmitting(true);
-                    await axios.delete(`${url}/api/document/delete/${id}`);
-                    router.push("/");
-                  } catch (_error) {
-                    setIsSubmitting(false);
-                    setError(true);
-                  }
-                }}
+                onClick={handleDelete}
               >
                 Delete
               </Button>
@@ -55,11 +62,12 @@ const DeleteButton = ({ id }: { id: string }) => {
           </Flex>
         </AlertDialog.Content>
       </AlertDialog.Root>
+
       <AlertDialog.Root open={error}>
         <AlertDialog.Content>
-          <AlertDialog.Title>ERROR</AlertDialog.Title>
+          <AlertDialog.Title>Error</AlertDialog.Title>
           <AlertDialog.Description>
-            Thid issue could not be deleted
+            This document could not be deleted.
           </AlertDialog.Description>
           <Button
             mt="3"

@@ -1,25 +1,21 @@
-import DocumentForm from "@/app/add/_addComponents/DocumentFormDynamic";
-import { Document } from "@/app/_homeComponents/DocumentCard";
-import { url } from "@/utilits";
-import { Flex } from "@radix-ui/themes";
-import axios from "axios";
 import { notFound } from "next/navigation";
-import React from "react";
+import { Document } from "@/app/_homeComponents/DocumentCard";
+import { Flex } from "@radix-ui/themes";
+import { serverApiClient } from "@/app/services/api-server";
+import DocumentEditor from "./EditDocumentForm";
 
-const page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
-  let document: Document;
-  try {
-    const res = await axios.get(`${url}/api/document/${id}`);
-    document = res.data.document;
-  } catch (_error) {
-    notFound();
-  }
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
+
+  const api = await serverApiClient();
+  const res = await api.get(`/api/document/${id}`);
+  const document: Document = res.data.document;
+
+  if (!document) return notFound();
+
   return (
-    <Flex justify="center">
-      <DocumentForm document={document} />
+    <Flex width="100%" ml="auto">
+      <DocumentEditor document={document} />
     </Flex>
   );
-};
-
-export default page;
+}

@@ -1,12 +1,14 @@
 import React from "react";
+import { Container, Flex } from "@radix-ui/themes";
 import DocumentForm from "./_addComponents/DocumentFormDynamic";
-import { Flex } from "@radix-ui/themes";
 
 const page = () => {
   return (
-    <Flex justify="center">
-      <DocumentForm />
-    </Flex>
+    <Container size="4">
+      <Flex justify="center">
+        <DocumentForm />
+      </Flex>
+    </Container>
   );
 };
 

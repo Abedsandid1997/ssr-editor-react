@@ -1,6 +1,8 @@
 import { Box } from "@radix-ui/themes";
-import Skeleton from "@/components/Skeleton";
-const DocumentFormSkeleton = () => {
+import React from "react";
+import Skeleton from "react-loading-skeleton";
+
+const DocumentEditSkeleton = () => {
   return (
     <Box className="w-full h-full">
       <Skeleton height="1.5rem" />
@@ -12,4 +14,4 @@ const DocumentFormSkeleton = () => {
   );
 };
 
-export default DocumentFormSkeleton;
+export default DocumentEditSkeleton;
