@@ -4,7 +4,7 @@ import { TextField, Card, Flex, Box, Grid } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createFormSchema } from "@/validation";
+import { createFormSchema, updateFormSchema } from "@/validation";
 import socket from "@/app/services/socket";
 import RichEditor from "./RichEditor";
 import CommentForm from "./CommentForm";
@@ -13,7 +13,7 @@ import CommentBox from "./CommentBox";
 import CodeEditor from "./CodeEditor";
 import { useAuth } from "@/app/AuthContext";
 
-type DocumentFormData = z.infer<typeof createFormSchema>;
+type DocumentFormData = z.infer<typeof updateFormSchema>;
 export interface Comment {
   user: { name: string; email: string };
   text: string;
@@ -26,7 +26,7 @@ export default function DocumentEditor({
   document: DocumentFormData;
 }) {
   const { setValue, watch } = useForm<DocumentFormData>({
-    resolver: zodResolver(createFormSchema),
+    resolver: zodResolver(updateFormSchema),
   });
   const [selectedText, setSelectedText] = useState("");
   const [comment, setComment] = useState("");
