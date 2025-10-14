@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     apiClient
-      .get("api/auth/me")
+      .get("/api/auth/me")
       .then((res) => {
         setAuthenticated(true);
         setUserId(res.data._id);
