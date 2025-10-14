@@ -30,7 +30,6 @@ export default function DocumentEditor({
   });
   const [selectedText, setSelectedText] = useState("");
   const [comment, setComment] = useState("");
-  // const [commentId, setCommentId] = useState("");
   const [comments, setComments] = useState<Comment[] | null>(null);
   const [activeComment, setActiveComment] = useState<Comment[] | null>(null);
   const { userId } = useAuth();

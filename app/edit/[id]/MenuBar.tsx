@@ -1,7 +1,3 @@
-// import "./styles.css";
-
-// import Highlight from "@tiptap/extension-highlight";
-// import TextAlign from "@tiptap/extension-text-align";
 import { Toggle } from "@/components/ui/toggle";
 import { Editor } from "@tiptap/react";
 import {
