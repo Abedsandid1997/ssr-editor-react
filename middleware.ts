@@ -4,6 +4,7 @@ import { verfiyAuth } from "./lib/auth";
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
+  console.log(token, "hhhhhhhhhhhhhhhhhhhhhhhh");
   if (!token) {
     return NextResponse.redirect(
       new URL(`/signin?redirect=${req.url}`, req.url)
