@@ -10,15 +10,15 @@ export async function middleware(req: NextRequest) {
     );
   }
 
-  const verfiedToken = await verfiyAuth(token).catch((err) => {
-    console.log(err);
-  });
+  //   const verfiedToken = await verfiyAuth(token).catch((err) => {
+  //     console.log(err);
+  //   });
 
-  if (!verfiedToken) {
-    return NextResponse.redirect(
-      new URL(`/signin?redirect=${req.url}`, req.url)
-    );
-  }
+  //   if (!verfiedToken) {
+  //     return NextResponse.redirect(
+  //       new URL(`/signin?redirect=${req.url}`, req.url)
+  //     );
+  //   }
 
   return NextResponse.next();
 }
