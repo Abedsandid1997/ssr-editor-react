@@ -6,7 +6,10 @@ export type Document = {
   title: string;
   content: string;
   _id: string;
-  owner: string;
+  owner: {
+    _id: string;
+  };
+  isCode: boolean;
 };
 
 interface Props {

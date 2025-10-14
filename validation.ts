@@ -11,9 +11,11 @@ export const createFormSchema = z.object({
 export const updateFormSchema = z.object({
   title: z.string().min(1, "Title is required").max(20),
   content: z.string().min(1, "Content is required").max(65535),
-  _id: z.string().optional(),
-  owner: z.object().optional(),
-  isCode: z.boolean().optional(),
+  _id: z.string(),
+  owner: z.object({
+    _id: z.string(),
+  }),
+  isCode: z.boolean(),
 });
 
 export const createUserValidation = z.object({
