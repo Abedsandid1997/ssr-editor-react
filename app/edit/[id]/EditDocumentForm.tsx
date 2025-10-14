@@ -123,7 +123,7 @@ export default function DocumentEditor({
               onChange={(e) => handleTitleChange(e.target.value)}
               className="w-full"
             />
-            {userId === document.owner && (
+            {userId === document.owner?._id && (
               <InviteUser documentId={document._id!} />
             )}
           </Flex>

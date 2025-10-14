@@ -4,7 +4,7 @@ import { AlertDialog, Button, Flex, Spinner } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 import SelectUser from "./SelectUser";
 import ManualEmailInput from "./ManualEmailInput";
-import apiClient from "@/app/services/api-client";
+import apiClient, { getUsers } from "@/app/services/api-client";
 import { FaShareSquare } from "react-icons/fa";
 import { useAuth } from "@/app/AuthContext";
 import axios from "axios";
@@ -30,8 +30,8 @@ const InviteUser = ({ documentId }: InviteUserProps) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await apiClient.get(`/api/user`);
-        setUsers(res.data);
+        const res = await getUsers();
+        setUsers(res);
       } catch (err) {
         console.error(err);
       }

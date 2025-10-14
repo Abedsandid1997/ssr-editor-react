@@ -12,8 +12,20 @@ const DeleteButton = ({ id }: { id: string }) => {
   const handleDelete = async () => {
     try {
       setIsSubmitting(true);
+      const mutation = `
+      mutation DeleteDocument ($id:ID!){
+          deleteDocument(id: $id) 
+        }
+      `;
 
-      await apiClient.delete(`/api/document/delete/${id}`);
+      const variables = { id };
+      console.log(variables);
+
+      await apiClient.post(`/graphql`, {
+        query: mutation,
+        variables,
+      });
+      // await apiClient.delete(`/api/document/delete/${id}`);
 
       router.push("/");
     } catch (error) {

@@ -17,11 +17,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { createFormSchema } from "@/validation";
 import ErrorMessage from "@/components/ErrorMessage";
-import apiClient from "@/app/services/api-client";
+import { addDocument } from "@/app/services/api-client";
 import RichEditor from "@/app/edit/[id]/RichEditor";
 import CodeEditor from "@/app/edit/[id]/CodeEditor";
 
-type DocumentFormData = z.infer<typeof createFormSchema>;
+export type DocumentFormData = z.infer<typeof createFormSchema>;
 
 const DocumentForm = () => {
   const router = useRouter();
@@ -49,10 +49,7 @@ const DocumentForm = () => {
         className="space-y-4 w-full"
         onSubmit={handleSubmit(async (data) => {
           try {
-            await apiClient.post(`/api/document`, {
-              ...data,
-              isCode: codeMode,
-            });
+            await addDocument(data, codeMode);
 
             router.push("/");
           } catch (error) {
