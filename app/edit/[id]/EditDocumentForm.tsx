@@ -12,6 +12,7 @@ import InviteUser from "./InviteUser";
 import CommentBox from "./CommentBox";
 import CodeEditor from "./CodeEditor";
 import { useAuth } from "@/app/AuthContext";
+import apiClient from "@/app/services/api-client";
 
 type DocumentFormData = z.infer<typeof updateFormSchema>;
 export interface Comment {
@@ -32,11 +33,20 @@ export default function DocumentEditor({
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<Comment[] | null>(null);
   const [activeComment, setActiveComment] = useState<Comment[] | null>(null);
-  const { userId, token } = useAuth();
-
+  const { userId } = useAuth();
+  const [token, setToken] = useState<string>("");
   useEffect(() => {
-    console.log(token, "ssssssssssssssss");
-    if (!token) return;
+    apiClient
+      .get("/auth")
+      .then((res) => {
+        const receivedToken = res.data.token;
+        if (!receivedToken) throw new Error("No token received");
+
+        setToken(receivedToken);
+      })
+      .catch(() => {
+        setToken("");
+      });
     connectSocket(token);
 
     socket.emit("create", document._id);
