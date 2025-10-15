@@ -3,7 +3,7 @@ import axios from "axios";
 import { DocumentFormData } from "../add/_addComponents/DocumentForm";
 
 const apiClient = axios.create({
-  baseURL: "/api",
+  baseURL: url,
   withCredentials: true,
 });
 

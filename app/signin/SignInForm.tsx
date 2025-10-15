@@ -10,6 +10,7 @@ import { Button, Callout } from "@radix-ui/themes";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import ErrorMessage from "@/components/ErrorMessage";
 import { useAuth } from "../AuthContext";
+import { url } from "@/utilits";
 
 const signInValidation = z.object({
   email: z.email("Invalid email"),
@@ -35,7 +36,14 @@ export default function SignInForm() {
   const onSubmit = async (data: SignInFormData) => {
     setError(null);
     try {
-      const res = await fetch("/api/auth/signin", {
+      // const res = await fetch("/api/auth/signin", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(data),
+      //   credentials: "include",
+      // });
+
+      const res = await fetch(url + "/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
