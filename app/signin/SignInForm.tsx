@@ -37,32 +37,32 @@ export default function SignInForm() {
   const onSubmit = async (data: SignInFormData) => {
     setError(null);
     try {
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
-      console.log(res);
-      if (!res.ok) {
-        setError("Something went wrong");
-      } else {
-        const resData = await res.json();
+      // const res = await fetch("/api/auth/signin", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(data),
+      //   credentials: "include",
+      // });
+      // console.log(res);
+      // if (!res.ok) {
+      //   setError("Something went wrong");
+      // } else {
+      //   const resData = await res.json();
 
-        setToken(resData.token);
-        console.log(token);
+      //   setToken(resData.token);
+      //   console.log(token);
+      //   setAuthenticated(true);
+      //   window.location.href = redirectUrl;
+      //   // router.push(redirectUrl);
+      // }
+      const res = await apiClient.post("/auth/signin", data);
+
+      if (res.status === 200) {
         setAuthenticated(true);
         window.location.href = redirectUrl;
-        // router.push(redirectUrl);
+      } else {
+        setError(res.data?.message || "Something went wrong");
       }
-      // const res = await apiClient.post("/auth/signin", data);
-
-      // if (res.status === 200) {
-      //   router.push(redirectUrl);
-      //   setAuthenticated(true);
-      // } else {
-      //   setError(res.data?.message || "Something went wrong");
-      // }
     } catch (err: unknown) {
       console.error(err);
       if (err instanceof Error) {
