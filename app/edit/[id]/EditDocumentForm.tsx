@@ -34,21 +34,11 @@ export default function DocumentEditor({
   const [comments, setComments] = useState<Comment[] | null>(null);
   const [activeComment, setActiveComment] = useState<Comment[] | null>(null);
   const { userId, token } = useAuth();
-  const [token, setToken] = useState<string>("");
+
   useEffect(() => {
-    await apiClient
-      .get("/auth")
-      .then((res) => {
-        const receivedToken = res.data.token;
-        if (!receivedToken) throw new Error("No token received");
-
-        setToken(receivedToken);
-      })
-      .catch(() => {
-        setToken("");
-      });
-    connectSocket(token);
-
+    if (token) {
+      connectSocket(token);
+    }
     socket.emit("create", document._id);
     socket.on("content", (data: string) => {
       setValue("content", data);
