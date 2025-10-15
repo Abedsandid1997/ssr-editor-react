@@ -33,70 +33,71 @@ export default function DocumentEditor({
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<Comment[] | null>(null);
   const [activeComment, setActiveComment] = useState<Comment[] | null>(null);
-  const { userId, token } = useAuth();
+  const { userId, setToken } = useAuth();
+  // const [token, setToken] = useState("");
 
-  useEffect(() => {
-    if (token) {
-      connectSocket(token);
-    }
-    socket.emit("create", document._id);
-    socket.on("content", (data: string) => {
-      setValue("content", data);
-    });
-
-    socket.emit("get-comments", document._id);
-    socket.on("get-comments", (allComments) => {
-      setComments(allComments);
-      if (document.isCode) setActiveComment(allComments);
-    });
-
-    socket.on("title", (data: string) => {
-      setValue("title", data);
-    });
-    return () => {
-      socket.disconnect();
-    };
-  }, [document._id, document.isCode, setValue]);
   // useEffect(() => {
-  //   const init = async () => {
-  //     try {
-  //       const res = await apiClient.get("/auth");
-  //       const receivedToken = res.data.token;
-  //       if (!receivedToken) throw new Error("No token received");
+  //   if (token) {
+  //     connectSocket(token);
+  //   }
+  //   socket.emit("create", document._id);
+  //   socket.on("content", (data: string) => {
+  //     setValue("content", data);
+  //   });
 
-  //       setToken(receivedToken);
+  //   socket.emit("get-comments", document._id);
+  //   socket.on("get-comments", (allComments) => {
+  //     setComments(allComments);
+  //     if (document.isCode) setActiveComment(allComments);
+  //   });
 
-  //       // ✅ Connecta socket först när token finns
-  //       connectSocket(receivedToken);
-
-  //       // Nu kan du göra allt socket-relaterat här
-  //       socket.emit("create", document._id);
-
-  //       socket.on("content", (data: string) => {
-  //         setValue("content", data);
-  //       });
-
-  //       socket.emit("get-comments", document._id);
-  //       socket.on("get-comments", (allComments) => {
-  //         setComments(allComments);
-  //         if (document.isCode) setActiveComment(allComments);
-  //       });
-
-  //       socket.on("title", (data: string) => {
-  //         setValue("title", data);
-  //       });
-  //     } catch (err) {
-  //       console.error("Failed to init socket:", err);
-  //       setToken("");
-  //     }
-  //   };
-
-  //   init();
-
+  //   socket.on("title", (data: string) => {
+  //     setValue("title", data);
+  //   });
   //   return () => {
   //     socket.disconnect();
   //   };
   // }, [document._id, document.isCode, setValue]);
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const res = await apiClient.get("/auth");
+        const receivedToken = res.data.token;
+        if (!receivedToken) throw new Error("No token received");
+
+        setToken(receivedToken);
+
+        // ✅ Connecta socket först när token finns
+        connectSocket(receivedToken);
+
+        // Nu kan du göra allt socket-relaterat här
+        socket.emit("create", document._id);
+
+        socket.on("content", (data: string) => {
+          setValue("content", data);
+        });
+
+        socket.emit("get-comments", document._id);
+        socket.on("get-comments", (allComments) => {
+          setComments(allComments);
+          if (document.isCode) setActiveComment(allComments);
+        });
+
+        socket.on("title", (data: string) => {
+          setValue("title", data);
+        });
+      } catch (err) {
+        console.error("Failed to init socket:", err);
+        setToken("");
+      }
+    };
+
+    init();
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [document._id, document.isCode, setValue]);
 
   const handleTitleChange = (text: string) => {
     const data = {
