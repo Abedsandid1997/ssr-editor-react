@@ -43,6 +43,7 @@ export default function SignInForm() {
         body: JSON.stringify(data),
         credentials: "include",
       });
+      console.log(res);
       if (!res.ok) {
         setError("Something went wrong");
       } else {
