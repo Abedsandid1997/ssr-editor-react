@@ -50,7 +50,6 @@ const DocumentForm = () => {
         onSubmit={handleSubmit(async (data) => {
           try {
             await addDocument(data, codeMode);
-            console.log(data, "add front end");
             router.push("/");
           } catch (error) {
             setError(`Unexpected error ${error}`);

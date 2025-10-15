@@ -20,7 +20,6 @@ const DeleteButton = ({ id }: { id: string }) => {
       `;
 
       const variables = { id };
-      console.log(variables);
 
       await apiClient.post(`/graphql`, {
         query: mutation,

@@ -36,12 +36,10 @@ export default function DocumentEditor({
 
   useEffect(() => {
     if (!token) return;
-    console.log("ssssssssssss", token);
     connectSocket(token);
 
     socket.emit("create", document._id);
     socket.on("content", (data: string) => {
-      console.log("get content front end");
       setValue("content", data);
     });
 

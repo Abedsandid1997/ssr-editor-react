@@ -19,7 +19,6 @@ export const getUsers = async () => {
       }
     }`;
   const res = await apiClient.post("/graphql", { query });
-  console.log(res.data);
   return res.data.data.users;
 };
 
