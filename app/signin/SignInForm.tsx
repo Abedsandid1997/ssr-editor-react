@@ -44,10 +44,10 @@ export default function SignInForm() {
         credentials: "include",
       });
       if (!res.ok) {
+        setError("Something went wrong");
+      } else {
         router.push(redirectUrl);
         setAuthenticated(true);
-      } else {
-        setError("Something went wrong");
       }
       // const res = await apiClient.post("/auth/signin", data);
 
