@@ -82,6 +82,8 @@ interface AuthContextType {
   setAuthenticated: (val: boolean) => void;
   userId: string;
   setUserId: (val: string) => void;
+  userName: string;
+  setUserName: (val: string) => void;
   token: string | null;
   setToken: (val: string | null) => void;
 }
@@ -91,6 +93,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
@@ -102,15 +105,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         setToken(receivedToken);
         setAuthenticated(true);
-        console.log(token, "sssssssssssssssss");
+
         const decoded: JwtPayload = jwtDecode(receivedToken);
         setUserId(decoded.id);
-        console.log(decoded.id, "sssssssssssssssss");
+
+        setUserName(decoded.email || "");
       })
       .catch(() => {
         setAuthenticated(false);
         setToken(null);
         setUserId("");
+        setUserName("");
       });
   }, []);
 
@@ -121,6 +126,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setAuthenticated,
         userId,
         setUserId,
+        userName,
+        setUserName,
         token,
         setToken,
       }}
