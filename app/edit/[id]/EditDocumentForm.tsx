@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFormSchema, updateFormSchema } from "@/validation";
-import socket from "@/app/services/socket";
+import socket, { connectSocket } from "@/app/services/socket";
 import RichEditor from "./RichEditor";
 import CommentForm from "./CommentForm";
 import InviteUser from "./InviteUser";
@@ -32,10 +32,12 @@ export default function DocumentEditor({
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<Comment[] | null>(null);
   const [activeComment, setActiveComment] = useState<Comment[] | null>(null);
-  const { userId } = useAuth();
+  const { userId, token } = useAuth();
 
   useEffect(() => {
-    socket.connect();
+    if (!token) return;
+    console.log("ssssssssssss", token);
+    connectSocket(token);
 
     socket.emit("create", document._id);
     socket.on("content", (data: string) => {

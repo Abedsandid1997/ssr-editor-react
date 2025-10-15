@@ -9,17 +9,22 @@
 // export default socket;
 import { url } from "@/utilits";
 import { io } from "socket.io-client";
-import { useAuth } from "@/app/AuthContext";
-
-// Exempel i en hook eller komponent
-const { token } = useAuth();
 
 const socket = io(url, {
   autoConnect: false,
   withCredentials: true,
-  auth: {
-    token, // här skickar vi JWT-token
-  },
 });
 
+export const connectSocket = (token: string) => {
+  socket.auth = { token }; // Dynamiskt sätt token innan connect
+  socket.connect();
+};
+
+// Exempel i en komponent
+/*
+import { connectSocket } from "@/path/to/socket";
+
+const token = "ditt-jwt-token";
+connectSocket(token);
+*/
 export default socket;
