@@ -9,7 +9,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Callout } from "@radix-ui/themes";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import ErrorMessage from "@/components/ErrorMessage";
-import { url } from "@/utilits";
 import { useAuth } from "../AuthContext";
 
 const signInValidation = z.object({
@@ -40,13 +39,14 @@ export default function SignInForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-        credentials: "include", // viktigt!
+        credentials: "include",
       });
 
       if (!res.ok) {
         const data = await res.json();
         setError(data.message);
       } else {
+        console.log(data);
         router.push(redirectUrl);
         setAuthenticated(true);
       }

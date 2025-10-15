@@ -12,9 +12,7 @@ import InviteUser from "./InviteUser";
 import CommentBox from "./CommentBox";
 import CodeEditor from "./CodeEditor";
 import { useAuth } from "@/app/AuthContext";
-import { io } from "socket.io-client";
-import Cookies from "js-cookie";
-import { url } from "@/utilits";
+
 type DocumentFormData = z.infer<typeof updateFormSchema>;
 export interface Comment {
   user: { name: string; email: string };
@@ -37,14 +35,8 @@ export default function DocumentEditor({
   const { userId } = useAuth();
 
   useEffect(() => {
-    const token = Cookies.get("token"); // hämta token från cookie eller respons
-    console.log(token, "hhhhhhhhhh");
-    const socket = io(url, {
-      auth: { token },
-      autoConnect: false,
-    });
-
     socket.connect();
+
     socket.emit("create", document._id);
     socket.on("content", (data: string) => {
       console.log("get content front end");
@@ -90,7 +82,7 @@ export default function DocumentEditor({
       isCode: document.isCode,
     };
     socket.emit("add_comment", data);
-    console.log("get add comment front end");
+    console.log("get add front end");
 
     setComment("");
     setSelectedText("");
