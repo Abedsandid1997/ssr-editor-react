@@ -56,7 +56,7 @@ export default function SignInForm() {
       //   // router.push(redirectUrl);
       // }
       const res = await apiClient.post("/auth/signin", data);
-
+      console.log(res);
       if (res.status === 200) {
         setAuthenticated(true);
         window.location.href = redirectUrl;
