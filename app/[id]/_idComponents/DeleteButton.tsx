@@ -4,6 +4,7 @@ import { AlertDialog, Button, Flex, Spinner } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import apiClient from "@/app/services/api-client";
+import axios from "axios";
 const DeleteButton = ({ id }: { id: string }) => {
   const router = useRouter();
   const [error, setError] = useState(false);
@@ -25,7 +26,6 @@ const DeleteButton = ({ id }: { id: string }) => {
         query: mutation,
         variables,
       });
-      // await apiClient.delete(`/api/document/delete/${id}`);
 
       router.push("/");
     } catch (error) {

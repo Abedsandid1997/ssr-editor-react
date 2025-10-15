@@ -16,9 +16,19 @@ const Navbar = () => {
     { href: "/add", label: "Add" },
   ];
   const handleLogout = async () => {
-    await apiClient("/api/auth/logout", { method: "POST" });
-    setAuthenticated(false);
-    router.push("/signin");
+    try {
+      const res = await apiClient("/auth/logout", {
+        method: "POST",
+      });
+      if (res.status === 200) {
+        setAuthenticated(false);
+        router.push("/signin");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
   return (
     <nav className="border-b border-gray-300 mb-5 px-5 h-20">

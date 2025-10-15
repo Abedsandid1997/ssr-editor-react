@@ -48,10 +48,19 @@ const InviteUser = ({ documentId }: InviteUserProps) => {
 
     try {
       setIsSubmitting(true);
-      await apiClient.post(`/api/user/documents/${documentId}/share`, {
+
+      // await fetch(`/api/user/documents/${documentId}`, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   credentials: "include",
+      //   body: JSON.stringify({ email: emailToSend, name: userName }),
+      // });
+
+      await apiClient.post(`/user/documents/${documentId}`, {
         email: emailToSend,
         name: userName,
       });
+
       setSuccess("Invitation sent!");
       setError(null);
       setManualEmail("");

@@ -11,6 +11,7 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import ErrorMessage from "@/components/ErrorMessage";
 import { useAuth } from "../AuthContext";
 import { url } from "@/utilits";
+import apiClient from "../services/api-client";
 
 const signInValidation = z.object({
   email: z.email("Invalid email"),
@@ -36,27 +37,13 @@ export default function SignInForm() {
   const onSubmit = async (data: SignInFormData) => {
     setError(null);
     try {
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
+      const res = await apiClient.post("/auth/signin", data);
 
-      // const res = await fetch(url + "/api/auth/signin", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(data),
-      //   credentials: "include",
-      // });
-
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.message);
-      } else {
-        console.log(data);
+      if (res.status === 200) {
         router.push(redirectUrl);
         setAuthenticated(true);
+      } else {
+        setError(res.data?.message || "Something went wrong");
       }
     } catch (err: unknown) {
       console.error(err);

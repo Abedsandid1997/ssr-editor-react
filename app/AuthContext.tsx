@@ -8,7 +8,6 @@ import {
   ReactNode,
 } from "react";
 import apiClient from "./services/api-client";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -34,8 +33,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userName, setUserName] = useState("");
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
-    axios
-      .get("/api/auth")
+    apiClient
+      .get("/auth")
       .then((res) => {
         const receivedToken = res.data.token;
         if (!receivedToken) throw new Error("No token received");

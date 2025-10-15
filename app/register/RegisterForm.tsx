@@ -9,7 +9,8 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { Button, Callout, Spinner } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import apiClient from "../services/api-client";
+import axios from "axios";
+import { url } from "@/utilits";
 
 type RegisterFormData = z.infer<typeof createUserValidation>;
 const RegisterForm = () => {
@@ -55,7 +56,7 @@ const RegisterForm = () => {
             className="mt-6 space-y-4"
             onSubmit={handleSubmit(async (data) => {
               try {
-                const res = await apiClient.post(`/api/auth/signup`, data);
+                const res = await axios.post(`${url}/api/auth/signup`, data);
                 if (res.status === 201) {
                   router.push("/");
                 } else {
