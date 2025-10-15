@@ -38,6 +38,7 @@ export default function DocumentEditor({
 
   useEffect(() => {
     const token = Cookies.get("token"); // hämta token från cookie eller respons
+    console.log(token, "hhhhhhhhhh");
     const socket = io(url, {
       auth: { token },
       autoConnect: false,
