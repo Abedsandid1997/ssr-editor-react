@@ -53,7 +53,6 @@ export default function SignInForm() {
         console.log(token);
         setAuthenticated(true);
         router.push(redirectUrl);
-        router.refresh();
       }
       // const res = await apiClient.post("/auth/signin", data);
 
