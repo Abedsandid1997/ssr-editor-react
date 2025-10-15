@@ -35,6 +35,7 @@ export default function DocumentEditor({
   const { userId, token } = useAuth();
 
   useEffect(() => {
+    console.log(token, "ssssssssssssssss");
     if (!token) return;
     connectSocket(token);
 
