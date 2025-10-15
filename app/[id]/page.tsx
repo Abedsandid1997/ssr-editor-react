@@ -6,8 +6,8 @@ import HtmlText from "../HtmlText";
 import { Document } from "../_homeComponents/DocumentCard";
 import { getDocument } from "../services/api-server";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function Page(context: { params: { id: string } }) {
+  const { id } = context.params;
 
   const document: Document = await getDocument(id);
   if (!document) return notFound();
