@@ -47,12 +47,12 @@ export default function SignInForm() {
       if (!res.ok) {
         setError("Something went wrong");
       } else {
-        router.push(redirectUrl);
-        router.refresh();
         const resData = await res.json();
 
         setToken(resData.token);
         setAuthenticated(true);
+        router.push(redirectUrl);
+        router.refresh();
       }
       // const res = await apiClient.post("/auth/signin", data);
 
