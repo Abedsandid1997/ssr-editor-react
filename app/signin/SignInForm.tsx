@@ -48,6 +48,7 @@ export default function SignInForm() {
         setError("Something went wrong");
       } else {
         router.push(redirectUrl);
+        router.refresh();
         const resData = await res.json();
 
         setToken(resData.token);
