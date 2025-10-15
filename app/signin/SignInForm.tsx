@@ -21,7 +21,7 @@ const signInValidation = z.object({
 type SignInFormData = z.infer<typeof signInValidation>;
 
 export default function SignInForm() {
-  const { setAuthenticated } = useAuth();
+  const { setAuthenticated, setToken } = useAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
   const redirectUrl = searchParams.get("redirect") || "/";
@@ -48,6 +48,9 @@ export default function SignInForm() {
         setError("Something went wrong");
       } else {
         router.push(redirectUrl);
+        const resData = await res.json();
+
+        setToken(resData.token);
         setAuthenticated(true);
       }
       // const res = await apiClient.post("/auth/signin", data);
