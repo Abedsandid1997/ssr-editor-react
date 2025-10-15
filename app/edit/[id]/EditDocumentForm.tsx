@@ -39,6 +39,7 @@ export default function DocumentEditor({
 
     socket.emit("create", document._id);
     socket.on("content", (data: string) => {
+      console.log("get content front end");
       setValue("content", data);
     });
 
@@ -81,6 +82,8 @@ export default function DocumentEditor({
       isCode: document.isCode,
     };
     socket.emit("add_comment", data);
+    console.log("get add comment front end");
+
     setComment("");
     setSelectedText("");
   };
