@@ -21,7 +21,7 @@ const signInValidation = z.object({
 type SignInFormData = z.infer<typeof signInValidation>;
 
 export default function SignInForm() {
-  const { setAuthenticated, setToken } = useAuth();
+  const { setAuthenticated, setToken, token } = useAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
   const redirectUrl = searchParams.get("redirect") || "/";
@@ -50,6 +50,7 @@ export default function SignInForm() {
         const resData = await res.json();
 
         setToken(resData.token);
+        console.log(token);
         setAuthenticated(true);
         router.push(redirectUrl);
         router.refresh();
