@@ -11,7 +11,7 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
+  const id = (await params).id;
 
   const document: Document = await getDocument(id);
   if (!document) return notFound();
