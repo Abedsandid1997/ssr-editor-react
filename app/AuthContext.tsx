@@ -8,6 +8,7 @@ import {
   ReactNode,
 } from "react";
 import apiClient from "./services/api-client";
+import axios from "axios";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -26,8 +27,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    apiClient
-      .get("/api/auth/me")
+    axios
+      .get("/api/auth")
       .then((res) => {
         setAuthenticated(true);
         setUserId(res.data._id);

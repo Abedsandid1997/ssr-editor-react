@@ -12,7 +12,9 @@ import InviteUser from "./InviteUser";
 import CommentBox from "./CommentBox";
 import CodeEditor from "./CodeEditor";
 import { useAuth } from "@/app/AuthContext";
-
+import { io } from "socket.io-client";
+import Cookies from "js-cookie";
+import { url } from "@/utilits";
 type DocumentFormData = z.infer<typeof updateFormSchema>;
 export interface Comment {
   user: { name: string; email: string };
@@ -35,8 +37,13 @@ export default function DocumentEditor({
   const { userId } = useAuth();
 
   useEffect(() => {
-    socket.connect();
+    const token = Cookies.get("token"); // hämta token från cookie eller respons
+    const socket = io(url, {
+      auth: { token },
+      autoConnect: false,
+    });
 
+    socket.connect();
     socket.emit("create", document._id);
     socket.on("content", (data: string) => {
       console.log("get content front end");
