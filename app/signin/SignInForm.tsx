@@ -37,14 +37,26 @@ export default function SignInForm() {
   const onSubmit = async (data: SignInFormData) => {
     setError(null);
     try {
-      const res = await apiClient.post("/auth/signin", data);
-
-      if (res.status === 200) {
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+      if (!res.ok) {
         router.push(redirectUrl);
         setAuthenticated(true);
       } else {
-        setError(res.data?.message || "Something went wrong");
+        setError("Something went wrong");
       }
+      // const res = await apiClient.post("/auth/signin", data);
+
+      // if (res.status === 200) {
+      //   router.push(redirectUrl);
+      //   setAuthenticated(true);
+      // } else {
+      //   setError(res.data?.message || "Something went wrong");
+      // }
     } catch (err: unknown) {
       console.error(err);
       if (err instanceof Error) {
