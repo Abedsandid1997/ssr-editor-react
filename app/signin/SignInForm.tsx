@@ -61,7 +61,7 @@ export default function SignInForm() {
         setAuthenticated(true);
         window.location.href = redirectUrl;
       } else {
-        setError(res.data?.message || "Something went wrong");
+        setError(res.data?.response.data.message || "Something went wrong");
       }
     } catch (err: unknown) {
       console.error(err);
