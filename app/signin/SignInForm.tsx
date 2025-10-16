@@ -56,17 +56,17 @@ export default function SignInForm() {
       //   // router.push(redirectUrl);
       // }
       const res = await apiClient.post("/auth/signin", data);
-      console.log(res.data);
+      console.log(res.data, "333333333333333");
       if (res.status === 200) {
         setAuthenticated(true);
         window.location.href = redirectUrl;
       } else {
-        setError(res.data?.response.data.message || "Something went wrong");
+        setError(res.data.message || "Something went wrong");
       }
     } catch (err: unknown) {
-      console.error(err);
+      console.error(err, "ssssssssssssss");
       if (err instanceof Error) {
-        setError("err.message");
+        setError(err.message);
       } else {
         setError("Unexpected error occurred");
       }
