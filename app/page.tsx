@@ -1,10 +1,12 @@
 import { getDocuments } from "@/app/services/api-server";
 import DocumentCard, { Document } from "./_homeComponents/DocumentCard";
-import { Container, Grid } from "@radix-ui/themes";
+import { Container, Grid, Heading } from "@radix-ui/themes";
 
 export default async function DocumentsPage() {
   try {
     const documents: Document[] = await getDocuments();
+    if (documents.length === 0)
+      return <Heading>You have no docuemnts yet</Heading>;
     return (
       <Container size="4">
         <Grid
