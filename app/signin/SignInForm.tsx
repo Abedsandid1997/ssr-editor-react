@@ -12,6 +12,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { useAuth } from "../AuthContext";
 import { url } from "@/utilits";
 import apiClient from "../services/api-client";
+import axios from "axios";
 
 const signInValidation = z.object({
   email: z.email("Invalid email"),
@@ -64,8 +65,9 @@ export default function SignInForm() {
         setError(res.data.message || "Something went wrong");
       }
     } catch (err: unknown) {
-      console.error(err, "ssssssssssssss");
-      if (err instanceof Error) {
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data.message || "Something went wrong");
+      } else if (err instanceof Error) {
         setError(err.message);
       } else {
         setError("Unexpected error occurred");
