@@ -117,7 +117,7 @@ const RegisterForm = () => {
               <ErrorMessage>{errors.password?.message}</ErrorMessage>
             </div>
             <Button disabled={isSubmitting} type="submit" className="!w-full">
-              Sign in {isSubmitting && <Spinner />}
+              Sign up {isSubmitting && <Spinner />}
             </Button>
           </form>
         </div>
