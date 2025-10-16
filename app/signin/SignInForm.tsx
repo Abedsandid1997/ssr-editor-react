@@ -66,7 +66,7 @@ export default function SignInForm() {
     } catch (err: unknown) {
       console.error(err);
       if (err instanceof Error) {
-        setError(err.message);
+        setError("err.message");
       } else {
         setError("Unexpected error occurred");
       }
