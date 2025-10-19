@@ -78,7 +78,6 @@ const Navbar = () => {
               Sign in
             </Link>
           )}
-          <ThemeSwitcher />
         </Box>
       </Flex>
     </nav>
