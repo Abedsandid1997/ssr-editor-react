@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { HiDocumentText } from "react-icons/hi";
 import { useAuth } from "./AuthContext";
 import apiClient from "./services/api-client";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const Navbar = () => {
   const { isAuthenticated, setAuthenticated } = useAuth();
@@ -77,6 +78,7 @@ const Navbar = () => {
               Sign in
             </Link>
           )}
+          <ThemeSwitcher />
         </Box>
       </Flex>
     </nav>
