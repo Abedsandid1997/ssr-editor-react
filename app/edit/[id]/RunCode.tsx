@@ -14,7 +14,7 @@ const RunCode = ({ code }: { code: string }) => {
     const data = {
       code: btoa(code),
     };
-
+    console.log(data);
     fetch("https://execjs.emilfolino.se/code", {
       body: JSON.stringify(data),
       headers: {

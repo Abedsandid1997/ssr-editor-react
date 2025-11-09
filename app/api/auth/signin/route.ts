@@ -38,7 +38,6 @@ export async function POST(req: Request) {
       credentials: "include",
     });
 
-    // Använd json() istället för text()
     const data = await backendRes.json();
 
     const setCookie = backendRes.headers.get("set-cookie");
